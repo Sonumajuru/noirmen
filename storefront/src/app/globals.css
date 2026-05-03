@@ -48,6 +48,10 @@ body {
     @apply transition-transform duration-500 hover:-translate-y-1;
   }
 
+  .input {
+    @apply bg-noir-card border border-noir-border px-4 py-3 text-sm text-noir-white outline-none focus:border-noir-white transition-colors;
+  }
+
   .divider {
     @apply border-t border-noir-border;
   }
