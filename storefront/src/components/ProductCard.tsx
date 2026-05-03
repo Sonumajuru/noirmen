@@ -17,6 +17,7 @@ export default function ProductCard({ product }: Props) {
 
   async function handleQuickAdd(e: React.MouseEvent) {
     e.preventDefault();
+    e.stopPropagation();
     if (!firstVariant) return;
     await addItem(firstVariant.id, 1);
   }
