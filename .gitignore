@@ -18,6 +18,8 @@ node_modules/
 # Next.js
 storefront/.next/
 storefront/out/
+/storefront/node_modules/
+/backend/node_modules/
 
 # Build output
 dist/

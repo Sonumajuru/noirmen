@@ -146,7 +146,8 @@ router.post('/:id/complete', (req, res) => {
 
   const orderId = uuidv4();
   const displayId = nextDisplayId(db);
-  const email = customer?.email || 'guest@noirmen.com';
+  const email = req.body.email || customer?.email || 'guest@noirmen.com';
+  const shippingAddress = req.body.shipping_address || null;
 
   const orderItems = cartData.items.map((item) => ({
     id: item.id,
@@ -160,11 +161,12 @@ router.post('/:id/complete', (req, res) => {
   db.prepare(`
     INSERT INTO orders
       (id, display_id, cart_id, customer_id, email, status, fulfillment_status, payment_status,
-       items, total, subtotal, shipping_total)
-    VALUES (?, ?, ?, ?, ?, 'pending', 'not_fulfilled', 'awaiting', ?, ?, ?, ?)
+       items, total, subtotal, shipping_total, shipping_address)
+    VALUES (?, ?, ?, ?, ?, 'pending', 'not_fulfilled', 'paid', ?, ?, ?, ?, ?)
   `).run(
     orderId, displayId, req.params.id, cartRow.customer_id || null, email,
-    JSON.stringify(orderItems), cartData.total, cartData.subtotal, cartData.shipping_total
+    JSON.stringify(orderItems), cartData.total, cartData.subtotal, cartData.shipping_total,
+    shippingAddress ? JSON.stringify(shippingAddress) : null
   );
 
   db.prepare('UPDATE carts SET completed = 1, order_id = ? WHERE id = ?').run(orderId, req.params.id);

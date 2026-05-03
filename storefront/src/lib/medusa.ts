@@ -53,9 +53,10 @@ export const medusa = {
       medusaFetch<{ cart: Cart }>(`/carts/${cartId}/line-items/${lineId}`, {
         method: "DELETE",
       }),
-    complete: (cartId: string) =>
+    complete: (cartId: string, data?: { email?: string; shipping_address?: object }) =>
       medusaFetch<{ type: string; data: Order }>(`/carts/${cartId}/complete`, {
         method: "POST",
+        body: JSON.stringify(data ?? {}),
       }),
   },
 
