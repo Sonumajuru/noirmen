@@ -166,7 +166,7 @@ export type Order = {
 };
 
 export function formatPrice(amount: number, currencyCode = "eur"): string {
-  return new Intl.NumberFormat("en-NL", {
+  return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: currencyCode.toUpperCase(),
   }).format(amount / 100);
